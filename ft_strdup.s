@@ -7,28 +7,18 @@ section .data
 section .text
 	global _ft_strdup
 _ft_strdup:
-	xor rcx,rcx
-	xor r13,r13
-	jmp .strlen
-
-.strlen:
-	cmp byte [rdi + r13],0
-	jz .allocate
-	inc r13
-	jmp .strlen
-
-.allocate:
-	mov r12,rdi
-	lea rdi,[r13 + 1]
-	mov rax,rdi
-	ret
+	call _ft_strlen
+	push rdi; push sur la stack rdi (la chaine de caractere)
+	lea rdi, [rax + 1] ; place dans rdi le resultat de strlen + 1
 	call _malloc
+	xor rcx, rcx
+	pop rdi
 	jmp .loop
 
 .loop:
-	cmp byte [r12 + rcx], 0
+	cmp byte [rdi + rcx], 0
 	jz .ret
-	mov dl, [r12 + rcx]
+	mov dl, [rdi + rcx]
 	mov [rax + rcx], dl
 	inc rcx
 	jmp .loop

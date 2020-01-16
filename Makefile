@@ -1,4 +1,4 @@
-NAME = a.out
+NAME = libasm.a
 
 SRCS = ft_strlen.s \
 		ft_write.s \
@@ -7,31 +7,22 @@ SRCS = ft_strlen.s \
 		ft_read.s \
 		ft_strdup.s
 
-MAIN_S = main.c
-
 OBJS = $(SRCS:%.s=%.o)
-MAIN = $(MAIN_S:.c=.o)
 
-ALL : $(NAME)
+all : $(NAME)
 
 $(NAME) : $(OBJS) $(MAIN)
-	@gcc $(OBJS) main.o -o $(NAME)
-
-.c.o :
-	@gcc -c $(MAIN_S)
+	@ar rc libasm.a $(OBJS)
 
 %.o : %.s
-	nasm -f macho64 $< -o $@
+	@nasm -f macho64 $< -o $@
 
-test : $(OBJS)
-	ld -arch x86_64 -lSystem -macosx_version_min 10.4 $(OBJS) -o $(NAME)
-
-run : ALL
-	@clear
-	@./$(NAME)
+re : fclean all
 
 clean :
-	rm $(OBJS)
+	@rm -rf $(OBJS)
+	@echo "Objects removed"
 
 fclean : clean
-	rm $(NAME)
+	@echo "$(NAME) Removed"
+	@rm -rf $(NAME)
