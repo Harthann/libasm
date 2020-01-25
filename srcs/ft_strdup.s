@@ -2,8 +2,6 @@ extern _malloc
 extern _ft_strlen
 extern _ft_strcpy
 
-section .data
-	msg db "Bo"
 section .text
 	global _ft_strdup
 _ft_strdup:
