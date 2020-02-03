@@ -50,7 +50,8 @@ int main(int ac, char **av)
 	if (res >= 0)
 		buffer[res] = '\0';
 	printf("read : [%s] [%d]\n", buffer, res);
-	close(fd);
+	if (fd != 0)
+		close(fd);
 	if (ac == 3)
 		fd = open(av[2], O_RDONLY);
 	else
@@ -58,6 +59,6 @@ int main(int ac, char **av)
 	res = ft_read(fd, buffer, 50);
 	if(res >= 0)
 		buffer[res] = '\0';
-	printf("ft_read : [%s] [%d] [%d]\n", buffer, res, fd);
+	printf("ft_read : [%s] [%d]\n", buffer, res);
 	return (0);
 }
